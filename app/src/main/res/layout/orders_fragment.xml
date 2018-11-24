@@ -9,14 +9,17 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:clickable="true"
-                  android:focusable="true"
-                  android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/colorAccent"
+            android:layout_height="match_parent">
 
-        <Button android:layout_width="match_parent"
+        <Button
+                android:layout_width="match_parent"
                 android:text="@string/scan_order"
                 android:onClick="@{() -> viewModel.onScanOrderClick()}"
                 android:layout_height="wrap_content"/>
@@ -28,6 +31,6 @@
                 tools:listitem="@layout/order_item"
                 android:layout_height="match_parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

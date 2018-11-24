@@ -34,10 +34,10 @@
                 app:frameThickness="2dp"
                 app:maskColor="#77000000"/>
 
-        <ProgressBar android:layout_width="wrap_content"
-                     android:visibility='@{viewModel.getOrderInProgress() ? View.VISIBLE : View.GONE}'
-                     android:layout_gravity="center"
-                     android:layout_height="wrap_content"/>
+        <!--<ProgressBar android:layout_width="wrap_content"-->
+                     <!--android:visibility='@{viewModel.getOrderInProgress() ? View.VISIBLE : View.GONE}'-->
+                     <!--android:layout_gravity="center"-->
+                     <!--android:layout_height="wrap_content"/>-->
 
     </FrameLayout>
 

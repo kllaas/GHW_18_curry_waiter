@@ -28,7 +28,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import business.curry.thepiekie.space.business.data.model.OrderPlace
-import business.curry.thepiekie.space.business.ui.orders.OnScanOrderClickClickListener
 import javax.inject.Inject
 
 class OrderDetailViewModel @Inject constructor(

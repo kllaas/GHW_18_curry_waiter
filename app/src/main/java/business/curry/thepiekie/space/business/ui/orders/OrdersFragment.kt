@@ -64,6 +64,7 @@ class OrdersFragment : DaggerFragment() {
     }
 
     companion object {
-        fun newInstance(): OrdersFragment = OrdersFragment()
+        fun newInstance(): OrdersFragment =
+            OrdersFragment()
     }
 }

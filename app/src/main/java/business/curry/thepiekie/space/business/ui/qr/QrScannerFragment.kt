@@ -2,29 +2,19 @@ package business.curry.thepiekie.space.business.ui.qr
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import business.curry.thepiekie.space.business.R
 import business.curry.thepiekie.space.business.data.model.OrderPlace
-import business.curry.thepiekie.space.business.databinding.OrdersFragmentBinding
 import business.curry.thepiekie.space.business.databinding.QrScannerFragmentBinding
 import business.curry.thepiekie.space.business.di.base.ViewModelFactory
-import business.curry.thepiekie.space.business.ui.orders.OrdersFragment
-import business.curry.thepiekie.space.business.ui.orders.OrdersViewModel
-import business.curry.thepiekie.space.business.ui.orders.adapter.OrderAdapter
 import com.budiyev.android.codescanner.*
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.orders_fragment.*
 import kotlinx.android.synthetic.main.qr_scanner_fragment.*
-import java.util.jar.Manifest
 import javax.inject.Inject
 
 class QrScannerFragment : DaggerFragment() {

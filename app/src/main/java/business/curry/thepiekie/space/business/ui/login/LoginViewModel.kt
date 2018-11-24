@@ -22,48 +22,48 @@
  * SOFTWARE.
  */
 
-package business.curry.thepiekie.space.business.ui.orders
+package business.curry.thepiekie.space.business.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import business.curry.thepiekie.space.business.data.model.OrderPlace
+import business.curry.thepiekie.space.business.data.model.LoginResponse
+import business.curry.thepiekie.space.business.domain.login.LoginResult
+import business.curry.thepiekie.space.business.domain.login.LoginUseCase
 import business.curry.thepiekie.space.business.domain.orders.LoadOrdersUseCaseResult
 import business.curry.thepiekie.space.business.domain.orders.LoadOrdersUseCase
-import business.curry.thepiekie.space.business.ui.login.OnLoginClick
+import business.curry.thepiekie.space.business.ui.orders.OnScanOrderClickClickListener
 import com.example.reddit.shared.domain.UseCaseResult
 import javax.inject.Inject
+import androidx.databinding.ObservableField
+import business.curry.thepiekie.space.business.domain.login.LoginParams
 
-class OrdersViewModel @Inject constructor(
-  private val loadOrdersUseCase: LoadOrdersUseCase
-) : ViewModel(), OnScanOrderClickClickListener {
 
-    private val loadOrdersUseCaseResult: MediatorLiveData<UseCaseResult<LoadOrdersUseCaseResult>> = loadOrdersUseCase.observe()
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase
+) : ViewModel(), OnLoginClick {
 
-    private val _orders = MediatorLiveData<List<OrderPlace>>()
-    val orders: LiveData<List<OrderPlace>>
-        get() = _orders
+    var username = ObservableField("")
+    var password = ObservableField("")
 
-    private val _navigateToQrScanner = MediatorLiveData<Unit>()
-    val navigateToQrScanner: LiveData<Unit>
-        get() = _navigateToQrScanner
+    val loginResult: MediatorLiveData<UseCaseResult<LoginResult>> = loginUseCase.observe()
 
-    init {
-        _orders.addSource(loadOrdersUseCaseResult) {
-            (loadOrdersUseCaseResult.value as? UseCaseResult.Success)?.data?.posts?.let {
-                _orders.value = it
-            }
-        }
+    private val _loginResponse = MediatorLiveData<LoginResult>()
+    val loginResponse: LiveData<LoginResult>
+        get() = _loginResponse
 
-        loadOrdersUseCase.execute()
-    }
+    private val _loginClick = MediatorLiveData<Unit>()
+    val loginClick: LiveData<Unit>
+        get() = _loginClick
 
-    override fun onScanOrderClick() {
-        _navigateToQrScanner.value = Unit
+    override fun onLoginClick() {
+        _loginClick.value = Unit
+        _loginResponse.addSource(loginResult) {}
+        loginUseCase.execute(LoginParams(username.get(), password.get()))
     }
 
 }
 
-interface OnScanOrderClickClickListener {
-    fun onScanOrderClick()
+interface OnLoginClick {
+    fun onLoginClick()
 }

@@ -29,6 +29,8 @@ import business.curry.thepiekie.space.business.di.base.PerFragment
 import business.curry.thepiekie.space.business.di.base.ViewModelKey
 import business.curry.thepiekie.space.business.ui.detail.OrderDetailFragment
 import business.curry.thepiekie.space.business.ui.detail.OrderDetailViewModel
+import business.curry.thepiekie.space.business.ui.login.LoginFragment
+import business.curry.thepiekie.space.business.ui.login.LoginViewModel
 import business.curry.thepiekie.space.business.ui.orders.OrdersFragment
 import business.curry.thepiekie.space.business.ui.orders.OrdersViewModel
 import business.curry.thepiekie.space.business.ui.qr.QrScannerFragment
@@ -43,12 +45,21 @@ internal abstract class BaseActivityModule {
 
     @PerFragment
     @ContributesAndroidInjector
+    internal abstract fun contributeLoginFragment(): LoginFragment
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @PerFragment
+    @ContributesAndroidInjector
     internal abstract fun contributeOrdersFragment(): OrdersFragment
 
     @Binds
     @IntoMap
     @ViewModelKey(OrdersViewModel::class)
-    abstract fun bindFeedViewModel(viewModel: OrdersViewModel): ViewModel
+    abstract fun bindOrdersViewModel(viewModel: OrdersViewModel): ViewModel
 
     @PerFragment
     @ContributesAndroidInjector

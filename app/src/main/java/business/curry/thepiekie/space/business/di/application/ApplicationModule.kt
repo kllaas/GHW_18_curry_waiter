@@ -27,6 +27,8 @@ package business.curry.thepiekie.space.business.di.application
 import android.content.Context
 import business.curry.thepiekie.space.business.App
 import business.curry.thepiekie.space.business.BuildConfig
+import business.curry.thepiekie.space.business.data.local.PrefsDataStore
+import business.curry.thepiekie.space.business.data.remote.AuthTokenInterceptor
 import business.curry.thepiekie.space.business.data.remote.CurryApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -60,14 +62,17 @@ class ApplicationModule {
         .build()
 
     @Provides
-    fun provideGson(): Converter.Factory = GsonConverterFactory.create(GsonBuilder().create())
+    fun provideGsonConverterFactory(): Converter.Factory = GsonConverterFactory.create(GsonBuilder().create())
+
+    @Provides
+    fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
     fun provideCurryApi(retrofit: Retrofit):
             CurryApi = retrofit.create(CurryApi::class.java)
 
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(prefsDataStore: PrefsDataStore, context: Context): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .readTimeout(300, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -80,7 +85,8 @@ class ApplicationModule {
             builder.addInterceptor(httpLoggingInterceptor)
         }
 
-        builder.protocols(Collections.singletonList(Protocol.HTTP_1_1))
+        if (prefsDataStore.loggedIn(context))
+            builder.addInterceptor(AuthTokenInterceptor(prefsDataStore, context))
 
         return builder.build()
     }

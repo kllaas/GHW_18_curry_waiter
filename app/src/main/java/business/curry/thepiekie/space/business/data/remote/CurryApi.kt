@@ -24,11 +24,11 @@
 
 package business.curry.thepiekie.space.business.data.remote
 
+import business.curry.thepiekie.space.business.data.model.LoginResponse
 import business.curry.thepiekie.space.business.data.model.OrderPlace
+import business.curry.thepiekie.space.business.domain.login.LoginParams
 import io.reactivex.Observable
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 import javax.inject.Singleton
 
 /**
@@ -36,6 +36,9 @@ import javax.inject.Singleton
  */
 @Singleton
 interface CurryApi {
+
+    @POST(LOGIN)
+    fun login(@Body body: LoginParams): Observable<LoginResponse>
 
     @GET(GET_ORDER_BY_ID)
     fun getOrderById(@Query("id") id: String): Observable<OrderPlace>
@@ -45,9 +48,10 @@ interface CurryApi {
 
     companion object {
 
-        const val BASE_URL = "https://www.reddit.com/"
+        const val BASE_URL = "https://api.thepiekie.space/curry/v1/"
 
-        private const val GET_ORDERS = "orders"
+        private const val LOGIN = "login/"
+        private const val GET_ORDERS = "orders/"
         private const val GET_ORDER_BY_ID = "order/{id}"
 
     }
