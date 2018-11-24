@@ -3,4 +3,6 @@
     <string name="person_amount">%d person</string>
     <string name="dishes_amount">%d dishes</string>
     <string name="scan_order">Scan order</string>
+    <string name="price">%f UAH</string>
+    <string name="weight_in_units" formatted="false">%f %s</string>
 </resources>

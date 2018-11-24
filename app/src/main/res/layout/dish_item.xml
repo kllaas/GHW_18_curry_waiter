@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <import type="business.curry.thepiekie.space.business.R"/>
+
+        <variable
+                name="dish"
+                type="business.curry.thepiekie.space.business.data.model.Dish"/>
+
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+
+        <ImageView
+                android:layout_width="@dimen/dish_image_preview_size"
+                android:layout_height="@dimen/dish_image_preview_size"
+                app:imageUrl="@{dish.imageUrl}"/>
+
+        <TextView
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/weight_in_units(dish.weight, dish.weightUnit)}"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="53 kg"/>
+
+        <TextView
+                android:id="@+id/booking_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:text="@{@string/price(dish.price)}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/person_amount"
+                tools:text="12.32 UAH"/>
+
+    </LinearLayout>
+
+</layout>

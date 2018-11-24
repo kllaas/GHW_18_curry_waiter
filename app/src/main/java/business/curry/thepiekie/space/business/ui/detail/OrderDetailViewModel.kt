@@ -22,24 +22,24 @@
  * SOFTWARE.
  */
 
-package business.curry.thepiekie.space.business.data.remote
+package business.curry.thepiekie.space.business.ui.detail
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
 import business.curry.thepiekie.space.business.data.model.OrderPlace
-import io.reactivex.Observable
+import business.curry.thepiekie.space.business.ui.orders.OnScanOrderClickClickListener
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class OrdersDataSource @Inject constructor(
-    private val curryApi: CurryApi
-) {
+class OrderDetailViewModel @Inject constructor(
+) : ViewModel() {
 
-    fun loadOrders(): Observable<List<OrderPlace>> {
-        return Observable.just(arrayListOf(OrderPlace("", "", "", 4, "status", 0, 0, 0, arrayListOf())))
-//        return curryApi.getOrders()
+    private val _order = MediatorLiveData<OrderPlace>()
+    val order: LiveData<OrderPlace>
+        get() = _order
+
+    fun setOrder(order: OrderPlace) {
+        _order.value = order
     }
 
-    fun loadOrderById(orderId: String): Observable<OrderPlace> {
-        return curryApi.getOrderById(orderId)
-    }
 }

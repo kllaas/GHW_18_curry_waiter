@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import business.curry.thepiekie.space.business.R
+import business.curry.thepiekie.space.business.data.model.OrderPlace
 import business.curry.thepiekie.space.business.databinding.OrdersFragmentBinding
 import business.curry.thepiekie.space.business.di.base.ViewModelFactory
+import business.curry.thepiekie.space.business.ui.detail.OrderDetailFragment
 import business.curry.thepiekie.space.business.ui.orders.adapter.OrderAdapter
 import business.curry.thepiekie.space.business.ui.qr.QrScannerFragment
 import business.curry.thepiekie.space.business.util.ext.inTransaction
@@ -36,12 +38,20 @@ class OrdersFragment : DaggerFragment() {
             openQrScannerScreen()
         })
 
+
         viewModel.orders.observe(this, Observer {
-            val adapter = OrderAdapter(it)
+            val adapter = OrderAdapter(it) { onOrderPlaceClick(it) }
             order_list.adapter = adapter
         })
 
         return viewDataBinding.root
+    }
+
+    private fun onOrderPlaceClick(orderPlace: OrderPlace) {
+        activity!!.supportFragmentManager.inTransaction {
+            add(R.id.base_container, OrderDetailFragment.newInstance(orderPlace))
+                .addToBackStack(OrdersFragment.javaClass.simpleName)
+        }
     }
 
     private fun openQrScannerScreen() {

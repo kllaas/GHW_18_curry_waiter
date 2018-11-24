@@ -53,11 +53,8 @@ class LoadOrdersUseCase @Inject constructor(
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Thread.sleep(5000)
                 result.value = UseCaseResult.Success(LoadOrdersUseCaseResult(it))
             }, {
-
-                Thread.sleep(5000)
                 result.value = UseCaseResult.Error(Exception(it))
             })
         )
