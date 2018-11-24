@@ -25,27 +25,43 @@
 package business.curry.thepiekie.space.business.domain.orders
 
 import business.curry.thepiekie.space.business.data.model.OrderPlace
+import business.curry.thepiekie.space.business.data.remote.OrdersDataSource
+import business.curry.thepiekie.space.business.domain.MediatorUseCase
+import business.curry.thepiekie.space.business.internal.DefaultScheduler
+import com.example.reddit.shared.domain.UseCaseResult
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-///**
-// * Load post by it's id from the repository
-// * Notice that now only cache is in [PostsRepository]
-// */
-//class LoadPostByIdUseCase @Inject constructor(
-//    private val postsRepository: PostsRepository
-//) : MediatorUseCase<LoadPostsByIdParameters, LoadPostByIdResult>() {
-//
-//    override fun execute(parameters: LoadPostsByIdParameters) {
-//        val postInRepository = postsRepository.loadPostById(parameters.postId)
-//
-//        DefaultScheduler.execute {
-//            if (postInRepository != null) {
-//                result.postValue(UseCaseResult.Success(LoadPostByIdResult(postInRepository)))
-//            } else {
-//                result.postValue(UseCaseResult.Error(Exception("There is no such post in repository")))
-//            }
-//        }
-//    }
-//}
+/**
+ * Load post by it's id from the repository
+ * Notice that now only cache is in [PostsRepository]
+ */
+class LoadOrderByIdUseCase @Inject constructor(
+    private val ordersDataSource: OrdersDataSource
+) : MediatorUseCase<LoadPostsByIdParameters, LoadPostByIdResult>() {
 
-data class LoadPostsByIdParameters(val postId: String)
-data class LoadPostByIdResult(val post: OrderPlace)
+    override fun execute(parameters: LoadPostsByIdParameters) {
+        disposables.add(ordersDataSource.loadOrderById("someParam")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    result.postValue(UseCaseResult.Success(LoadPostByIdResult(it)))
+                }, {
+                    result.postValue(UseCaseResult.Error(Exception("There is no such order, sorry.")))
+                }
+            )
+        )
+    }
+
+    fun execute(id: String): Observable<OrderPlace> {
+        return ordersDataSource.loadOrderById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+}
+
+data class LoadPostsByIdParameters(val orderId: String)
+data class LoadPostByIdResult(val orderPlace: OrderPlace)

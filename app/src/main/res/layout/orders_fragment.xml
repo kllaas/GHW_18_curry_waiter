@@ -16,6 +16,7 @@
 
         <Button android:layout_width="match_parent"
                 android:text="@string/scan_order"
+                android:onClick="@{() -> viewModel.onScanOrderClick()}"
                 android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView

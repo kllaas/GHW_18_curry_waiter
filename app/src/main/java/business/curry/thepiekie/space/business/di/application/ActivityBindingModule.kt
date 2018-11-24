@@ -39,7 +39,6 @@ abstract class ActivityBindingModule {
             BaseActivityModule::class
         ]
     )
-
     internal abstract fun baseActivity(): BaseActivity
 
 }

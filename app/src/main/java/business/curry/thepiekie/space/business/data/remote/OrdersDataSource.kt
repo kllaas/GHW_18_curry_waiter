@@ -38,4 +38,8 @@ class OrdersDataSource @Inject constructor(
 //        return Observable.just(arrayListOf(OrderPlace("", "", "", 4, "status", 0, 0, 0, arrayListOf())))
         return curryApi.getOrders()
     }
+
+    fun loadOrderById(orderId: String): Observable<OrderPlace> {
+        return curryApi.getOrderById(orderId)
+    }
 }

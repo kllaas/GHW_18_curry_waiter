@@ -22,33 +22,11 @@
  * SOFTWARE.
  */
 
-package business.curry.thepiekie.space.business.data.remote
+package business.curry.thepiekie.space.business.util.ext
 
-import business.curry.thepiekie.space.business.data.model.OrderPlace
-import io.reactivex.Observable
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Query
-import javax.inject.Singleton
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 
-/**
- * Responsible for fetching post data from the Reddit API
- */
-@Singleton
-interface CurryApi {
-
-    @GET(GET_ORDER_BY_ID)
-    fun getOrderById(@Query("id") id: String): Observable<OrderPlace>
-
-    @GET(GET_ORDERS)
-    fun getOrders(): Observable<List<OrderPlace>>
-
-    companion object {
-
-        const val BASE_URL = "https://www.reddit.com/"
-
-        private const val GET_ORDERS = "orders"
-        private const val GET_ORDER_BY_ID = "order/{id}"
-
-    }
+inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+    beginTransaction().func().commit()
 }

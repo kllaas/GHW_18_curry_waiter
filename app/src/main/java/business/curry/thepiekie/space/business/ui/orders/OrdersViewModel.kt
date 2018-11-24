@@ -29,19 +29,23 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import business.curry.thepiekie.space.business.data.model.OrderPlace
 import business.curry.thepiekie.space.business.domain.orders.LoadOrdersUseCaseResult
-import business.curry.thepiekie.space.business.domain.orders.LoadPostsUseCase
+import business.curry.thepiekie.space.business.domain.orders.LoadOrdersUseCase
 import com.example.reddit.shared.domain.UseCaseResult
 import javax.inject.Inject
 
 class OrdersViewModel @Inject constructor(
-    loadPostsUseCase: LoadPostsUseCase
-) : ViewModel() {
+  private val loadOrdersUseCase: LoadOrdersUseCase
+) : ViewModel(), OnScanOrderClickClickListener {
 
-    private val loadOrdersUseCaseResult: MediatorLiveData<UseCaseResult<LoadOrdersUseCaseResult>> = loadPostsUseCase.observe()
+    private val loadOrdersUseCaseResult: MediatorLiveData<UseCaseResult<LoadOrdersUseCaseResult>> = loadOrdersUseCase.observe()
 
     private val _orders = MediatorLiveData<List<OrderPlace>>()
     val orders: LiveData<List<OrderPlace>>
         get() = _orders
+
+    private val _navigateToQrScanner = MediatorLiveData<Unit>()
+    val navigateToQrScanner: LiveData<Unit>
+        get() = _navigateToQrScanner
 
     init {
         _orders.addSource(loadOrdersUseCaseResult) {
@@ -50,7 +54,15 @@ class OrdersViewModel @Inject constructor(
             }
         }
 
-        loadPostsUseCase.execute()
+        loadOrdersUseCase.execute()
     }
 
+    override fun onScanOrderClick() {
+        _navigateToQrScanner.value = Unit
+    }
+
+}
+
+interface OnScanOrderClickClickListener {
+    fun onScanOrderClick()
 }

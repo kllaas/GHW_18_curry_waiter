@@ -98,4 +98,9 @@ dependencies {
 
     implementation "com.google.code.gson:gson:$gson_version"
 
+
+    // Qr scanner
+
+    implementation "com.budiyev.android:code-scanner:$qr_scanner_version"
+
 }

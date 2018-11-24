@@ -29,6 +29,8 @@ import business.curry.thepiekie.space.business.di.base.PerFragment
 import business.curry.thepiekie.space.business.di.base.ViewModelKey
 import business.curry.thepiekie.space.business.ui.orders.OrdersFragment
 import business.curry.thepiekie.space.business.ui.orders.OrdersViewModel
+import business.curry.thepiekie.space.business.ui.qr.QrScannerFragment
+import business.curry.thepiekie.space.business.ui.qr.QrScannerViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -39,11 +41,20 @@ internal abstract class BaseActivityModule {
 
     @PerFragment
     @ContributesAndroidInjector
-    internal abstract fun contributeFeedFragment(): OrdersFragment
+    internal abstract fun contributeOrdersFragment(): OrdersFragment
 
     @Binds
     @IntoMap
     @ViewModelKey(OrdersViewModel::class)
     abstract fun bindFeedViewModel(viewModel: OrdersViewModel): ViewModel
+
+    @PerFragment
+    @ContributesAndroidInjector
+    internal abstract fun contributeQrScannerFragment(): QrScannerFragment
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(QrScannerViewModel::class)
+    abstract fun bindQrScannerViewModel(viewModel: QrScannerViewModel): ViewModel
 
 }

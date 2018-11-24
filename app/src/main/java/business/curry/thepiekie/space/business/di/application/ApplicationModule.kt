@@ -26,15 +26,22 @@ package business.curry.thepiekie.space.business.di.application
 
 import android.content.Context
 import business.curry.thepiekie.space.business.App
+import business.curry.thepiekie.space.business.BuildConfig
 import business.curry.thepiekie.space.business.data.remote.CurryApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 @Module
 class ApplicationModule {
@@ -45,10 +52,11 @@ class ApplicationModule {
     }
 
     @Provides
-    fun provideRetrofit(factory: Converter.Factory): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(factory: Converter.Factory, client: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(CurryApi.BASE_URL)
         .addConverterFactory(factory)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .client(client)
         .build()
 
     @Provides
@@ -57,5 +65,24 @@ class ApplicationModule {
     @Provides
     fun provideCurryApi(retrofit: Retrofit):
             CurryApi = retrofit.create(CurryApi::class.java)
+
+    @Provides
+    fun provideOkHttpClient(): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+            .readTimeout(300, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(300, TimeUnit.SECONDS);
+
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(httpLoggingInterceptor)
+        }
+
+        builder.protocols(Collections.singletonList(Protocol.HTTP_1_1))
+
+        return builder.build()
+    }
 
 }

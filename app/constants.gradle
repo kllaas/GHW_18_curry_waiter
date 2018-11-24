@@ -126,4 +126,9 @@ project.ext {
     // https://mvnrepository.com/artifact/com.nhaarman/mockito-kotlin
 
     mockito_kotlin_version = '1.6.0'
+
+    // Qr scanner
+    // https://github.com/yuriy-budiyev/code-scanner
+
+    qr_scanner_version = '2.0.1'
 }
