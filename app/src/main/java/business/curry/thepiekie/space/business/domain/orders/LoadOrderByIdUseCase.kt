@@ -24,6 +24,8 @@
 
 package business.curry.thepiekie.space.business.domain.orders
 
+import business.curry.thepiekie.space.business.data.model.OrderPlace
+
 ///**
 // * Load post by it's id from the repository
 // * Notice that now only cache is in [PostsRepository]
@@ -46,4 +48,4 @@ package business.curry.thepiekie.space.business.domain.orders
 //}
 
 data class LoadPostsByIdParameters(val postId: String)
-data class LoadPostByIdResult(val post: Order)
+data class LoadPostByIdResult(val post: OrderPlace)

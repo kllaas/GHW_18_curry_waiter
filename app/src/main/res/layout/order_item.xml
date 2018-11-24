@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <import type="business.curry.thepiekie.space.business.R"/>
+
+        <variable
+                name="orderPlace"
+                type="business.curry.thepiekie.space.business.data.model.OrderPlace"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+
+        <TextView
+                android:id="@+id/person_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/person_amount(orderPlace.getAmountPersons())}"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="4 person"/>
+
+        <TextView
+                android:id="@+id/booking_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:text="@{orderPlace.getBookingTimeFormatted()}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/person_amount"
+                tools:text="12.32"/>
+
+        <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{orderPlace.getStatus()}"
+                android:layout_marginTop="16sp"
+                tools:text="Some status"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@+id/booking_time"/>
+
+        <TextView
+                android:id="@+id/dishes_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/dishes_amount(orderPlace.getOrderDishes.size())}"
+                android:layout_marginTop="16sp"
+                tools:text="4 dishes"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@+id/booking_time"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
